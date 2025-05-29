@@ -1,0 +1,125 @@
+/* เพิ่มส่วนนี้ในไฟล์ CSS ที่มีอยู่ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Kanit', sans-serif;
+} 
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #607dff;
+  padding: 20px;
+  
+}
+
+.calculator-card {
+  background: white;
+  border: 2px solid rgb(20, 45, 156);
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 0px #000000;
+  padding: 50px;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.area-input h2 {
+  margin-top: 0;
+  color: #607dff;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.number-input {
+  padding: 8px 12px;
+  border: 2px solid #005490;
+  border-radius: 100px;
+  flex: 1;
+}
+
+input[type="number"]:hover {
+  border-color: #005490;
+  box-shadow: 0 0 5px #005490;
+  transition: all 0.1s ease-in;
+  transform: scale(1.02);
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #005490;
+  box-shadow: 0 0 5px #005490;
+}
+
+.select-input {
+  padding: 8px 12px;
+  border: 2px solid #005490;
+  border-radius: 100px;
+  width: 100%;
+}
+
+select:hover {
+  border-color: #005490;
+  box-shadow: 0 0 5px #005490;
+  transition: all 0.1s ease-in;
+}
+
+select:focus {
+  outline: none;
+  border-color: #005490;
+  box-shadow: 0 0 5px #005490;
+}
+
+.shape-selector, .shape-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.result-display {
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.result-display h3 {
+  font-size: 2rem;
+  margin-top: 0;
+  color: #607dff;
+  text-align: center;
+}
+
+.result-info {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.result-info span {
+  font-weight: bold;
+  color: #2c7be5;
+  font-size: 1.3rem;
+}
+
+.pieces-result {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.pieces-result span {
+  color: #2c7be5;
+  font-size: 1.3rem;
+}
+
