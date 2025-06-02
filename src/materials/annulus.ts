@@ -9,5 +9,13 @@ export const annulusShape = {
   inputs: ['รัศมีวงนอก', 'รัศมีวงใน'],
   calculateArea: (inputs: Record<string, number>): number => {
     return calculateAnnulusArea(inputs['รัศมีวงนอก'], inputs['รัศมีวงใน']);
+  },
+  getDimensions: (inputs: Record<string, number>) => {
+    const outerRadius = inputs['รัศมีวงนอก'] || 0;
+    const outerDiameter = 2 * outerRadius;
+    return {
+      width: outerDiameter,
+      height: outerDiameter
+    };
   }
 };

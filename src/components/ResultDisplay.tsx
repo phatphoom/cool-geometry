@@ -7,27 +7,101 @@ interface ResultDisplayProps {
   shapeParams: Record<string, number>;
 }
 
-export default function ResultDisplay({ totalArea, shape, shapeParams }: ResultDisplayProps) {
-  const selectedShape = shapes.find(s => s.id === shape);
+export default function ResultDisplay({
+  totalArea,
+  shape,
+  shapeParams,
+}: ResultDisplayProps) {
+  const selectedShape = shapes.find((s) => s.id === shape);
   const numericTotalArea = Number(totalArea) || 0;
-  const areaPerPiece = selectedShape ? Number(selectedShape.calculateArea(shapeParams)) : 0; // เพิ่มมาเพื่อแสดงผลพื้นที่ต่อชิ้น
-  const safeAreaPerPiece = isNaN(areaPerPiece) || areaPerPiece <= 0 ? 0 : areaPerPiece; // ป้องกันค่าผิด (NaN, ลบ, หรือ 0)
-  const pieces = safeAreaPerPiece > 0 && selectedShape ? calculatePieces(numericTotalArea, selectedShape, shapeParams) : 0;
+
+  if (!selectedShape) {
+    return (
+      <div className="result-display">
+        <h3>ผลลัพธ์การคำนวณ</h3>
+        <p className="shape-warning">กรุณาเลือกรูปทรงก่อนทำการคำนวณ</p>
+      </div>
+    );
+  }
+
+  // Get the area per piece for display purposes
+  const areaPerPiece = Number(selectedShape.calculateArea(shapeParams));
+  const safeAreaPerPiece =
+    isNaN(areaPerPiece) || areaPerPiece <= 0 ? 0 : areaPerPiece;
+
+  // Sheet dimensions are now included in shapeParams from the parent component
+  // Calculate pieces using grid-based placement
+  const pieces =
+    safeAreaPerPiece > 0
+      ? calculatePieces(numericTotalArea, selectedShape, shapeParams)
+      : 0;
+
+  const usedArea = pieces * safeAreaPerPiece;
+  const remainingArea = numericTotalArea - usedArea;
+  const percentUsed =
+    numericTotalArea > 0 ? (usedArea / numericTotalArea) * 100 : 0;
+  const percentRemaining = 100 - percentUsed;
 
   return (
     <div className="result-display">
       <h3>ผลลัพธ์การคำนวณ</h3>
       <div className="result-info">
-        <p>พื้นที่รวม : <span>{numericTotalArea}</span> ตารางหน่วย</p>
-        {selectedShape && (
-          <p>พื้นที่ต่อชิ้น: <span>{safeAreaPerPiece.toFixed(2)}</span> ตารางหน่วย</p>
+        <p>
+          รูปทรงที่เลือก: <span>{selectedShape.name}</span>
+        </p>
+        <p>
+          พื้นที่รวม : <span>{numericTotalArea.toFixed(2)}</span> ตารางหน่วย
+        </p>
+        <p>
+          พื้นที่ต่อชิ้น: <span>{safeAreaPerPiece.toFixed(2)}</span> ตารางหน่วย
+        </p>
+        <p>
+          พื้นที่ที่ใช้ไป :{" "}
+          <span className="area-use">{percentUsed.toFixed(2)}%</span> (
+          {usedArea.toFixed(2)} ตารางหน่วย)
+        </p>
+        <p>
+          พื้นที่ที่เหลือ :{" "}
+          <span className="area-remain">{percentRemaining.toFixed(2)}%</span> (
+          {remainingArea.toFixed(2)} ตารางหน่วย)
+        </p>
+
+        {selectedShape.getDimensions && (
+          <div className="grid-layout-info">
+            <p>การจัดวางแบบตาราง:</p>
+            {shapeParams.sheetWidth > 0 &&
+              shapeParams.sheetHeight > 0 &&
+              selectedShape.getDimensions && (
+                <>
+                  <p>
+                    แนวนอน:{" "}
+                    <span>
+                      {Math.floor(
+                        shapeParams.sheetWidth /
+                          (selectedShape.getDimensions(shapeParams).width || 1)
+                      )}
+                    </span>{" "}
+                    ชิ้น
+                  </p>
+                  <p>
+                    แนวตั้ง:{" "}
+                    <span>
+                      {Math.floor(
+                        shapeParams.sheetHeight /
+                          (selectedShape.getDimensions(shapeParams).height || 1)
+                      )}
+                    </span>{" "}
+                    ชิ้น
+                  </p>
+                </>
+              )}
+          </div>
         )}
-        <p className="pieces-result">จำนวนชิ้นที่สร้างได้ : <span>{pieces}</span> ชิ้น</p>
+
+      <p className="pieces-result">
+          จำนวนชิ้นที่สร้างได้ : <span>{pieces}</span> ชิ้น
+      </p>
       </div>
     </div>
   );
 }
-
-// ปัญหา NaN คือ ผลลัพธ์ที่เกิดจากการแปลงค่าหรือคำนวณที่ไม่สามารถให้ผลลัพธ์เป็นตัวเลขได้ 
-// แก้คือ เพิ่มตัวแปร safeAreaPerPiece เพื่อเช็คและป้องกัน NaN ก่อนแสดงผล จะช่วยให้ไม่ขึ้น NaN 
-// ถ้า areaPerPiece ไม่ใช่ตัวเลข (NaN) หรือ ≤ 0 → ใช้ 0 แทน

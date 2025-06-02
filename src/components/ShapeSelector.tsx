@@ -1,5 +1,20 @@
+// components/ShapeSelector.tsx
 import React from "react";
-import { shapes } from "@/materials";
+
+interface Shape {
+  id: string;
+  name: string;
+}
+
+const shapes: Shape[] = [
+  { id: "square", name: "สี่เหลี่ยมจัตุรัส" },
+  { id: "rectangle", name: "สี่เหลี่ยมผืนผ้า" },
+  { id: "circle", name: "วงกลม" },
+  { id: "triangle", name: "สามเหลี่ยม" } ,
+  // { id: "annulus ", name: "วงแหวน" } ,
+  { id: "equilateralTriangle", name: "สามเหลี่ยมด้านเท่า" } ,
+  { id : "heronTriangle" , name: "สามเหลี่ยมด้านไม่เท่า" },
+];
 
 interface ShapeSelectorProps {
   value: string;
@@ -9,17 +24,18 @@ interface ShapeSelectorProps {
 export default function ShapeSelector({ value, onChange }: ShapeSelectorProps) {
   return (
     <div className="shape-selector">
-      <label>เลือกรูปทรงเลขาคณิต: </label>
-      <select 
-        value={value} 
-        onChange={e => onChange(e.target.value)}
-        className="select-input"
-      >
-        <option value="">-- เลือกรูปทรงที่ต้องการ --</option>
+      <h2>เลือกรูปทรงเลขาคณิต</h2>
+      <div className="shape-options">
         {shapes.map(shape => (
-          <option key={shape.id} value={shape.id}>{shape.name}</option>
+          <div 
+            key={shape.id} 
+            className={`shape-option ${value === shape.id ? "selected" : ""}`}
+            onClick={() => onChange(shape.id)}
+          >
+            {shape.name}
+          </div>
         ))}
-      </select>
+      </div>
     </div>
   );
 }

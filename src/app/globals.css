@@ -1,10 +1,11 @@
-/* เพิ่มส่วนนี้ในไฟล์ CSS ที่มีอยู่ */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Kanit', sans-serif;
-} 
+  font-family: "Kanit", sans-serif;
+}
 
 .container {
   display: flex;
@@ -13,7 +14,6 @@
   min-height: 100vh;
   background-color: #607dff;
   padding: 20px;
-  
 }
 
 .calculator-card {
@@ -23,17 +23,49 @@
   box-shadow: 0px 0px 10px 0px #000000;
   padding: 50px;
   width: 100%;
-  max-width: 500px;
+  max-width: 900px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.calculator-content {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.form-section , .result-section {
+  flex: 1;
+}
+
+.result-section {
+  background-color: #f5f5f5;
+  border-left: 2px solid #ccc;
+  border-radius: 0 15px 15px 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .area-input h2 {
-  margin-top: 0;
   color: #607dff;
-  font-size: 2rem;
-  margin-bottom: 10px;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
   text-align: center;
 }
 
@@ -44,82 +76,143 @@
   margin-bottom: 10px;
 }
 
-.number-input {
-  padding: 8px 12px;
-  border: 2px solid #005490;
-  border-radius: 100px;
-  flex: 1;
-}
-
-input[type="number"]:hover {
-  border-color: #005490;
-  box-shadow: 0 0 5px #005490;
-  transition: all 0.1s ease-in;
-  transform: scale(1.02);
-}
-
-input[type="number"]:focus {
-  outline: none;
-  border-color: #005490;
-  box-shadow: 0 0 5px #005490;
-}
-
-.select-input {
+.number-input , .select-input {
   padding: 8px 12px;
   border: 2px solid #005490;
   border-radius: 100px;
   width: 100%;
+  font-size: 1rem;
 }
 
-select:hover {
+.number-input::placeholder {
+  color: #6e6e6e;
+  font-style: italic;
+}
+
+input[type="number"]:hover , select:hover {
   border-color: #005490;
   box-shadow: 0 0 5px #005490;
-  transition: all 0.1s ease-in;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transform: scale(1.02);
 }
 
-select:focus {
+input[type="number"]:focus , select:focus {
   outline: none;
   border-color: #005490;
   box-shadow: 0 0 5px #005490;
 }
 
-.shape-selector, .shape-input {
+.shape-selector {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.shape-selector h2 {
+  color: #607dff;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.shape-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.shape-option {
+  padding: 6px;
+  border: 2px solid #005490;
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: white;
+}
+
+.shape-option:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 5px #005490;
+}
+
+.shape-option:active {
+  transform: scale(0.97);
+}
+
+.shape-option.selected {
+  background-color: #1a36b3;
+  border: none;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 0 5px #000000;
+}
+
+.shape-warning {
+  color: #c62828;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 600;
 }
 
 .result-display {
-  padding-top: 10px;
-  border-top: 1px solid #ddd;
+  padding: 10px;
+  background-color: #eeeeee;
+  border-radius: 10px;
 }
 
 .result-display h3 {
-  font-size: 2rem;
-  margin-top: 0;
+  font-size: 1.8rem;
   color: #607dff;
   text-align: center;
 }
 
 .result-info {
-  background-color: #f9f9f9;
   padding: 15px;
   border-radius: 8px;
 }
 
+.result-info:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
 .result-info span {
   font-weight: bold;
-  color: #2c7be5;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  color: #607dff;
+}
+
+.area-use {
+  color: #2e7d32 !important;
+}
+
+.area-remain {
+  color: #c62828 !important;
 }
 
 .pieces-result {
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.6rem;
+  text-align: center;
 }
 
 .pieces-result span {
   color: #2c7be5;
-  font-size: 1.3rem;
+  font-size: 2.5rem;
 }
 
+.result-area {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.result-area p {
+  font-size: 1.2rem;
+  color: #005490;
+  font-weight: bold;
+}

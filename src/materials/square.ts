@@ -8,5 +8,11 @@ export const squareShape = {
   inputs: ['ด้าน'],
   calculateArea: (inputs: Record<string, number>): number => {
     return calculateSquareArea(inputs['ด้าน']);
+  },
+  getDimensions: (inputs: Record<string, number>) => {
+    return {
+      width: inputs['ด้าน'] || 0,
+      height: inputs['ด้าน'] || 0
+    };
   }
 };
